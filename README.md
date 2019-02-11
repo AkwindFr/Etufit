@@ -1,6 +1,6 @@
 # "How to use" is under descriptions see below.
 
-#Etufit Project
+# Etufit Project
 
 Hello and welcome to Etufit project.
 
@@ -77,7 +77,7 @@ In some case you can have missing php env var error when you try to use composer
 - Find .env file in etufit folder
     - make a copy and rename it : .env.local
     /!\ You musn't modify .env orignal file, always work on .env.local, who will be ignored by gitignore file /!\
-- Etufit works with google recaptcha v2
+- Etufit works with google recaptcha v2 /!\
     Add your private and public key for recaptcha in .env.local file
 - Change your access to your database (line 18)
 - Follow those steps to create and save dataBase :
@@ -90,3 +90,11 @@ In some case you can have missing php env var error when you try to use composer
 
 You are now ready to use Etufit. See you soon !
 
+# Contributing
+- Don't forget to be clear with your commit, help us and yourself contribute and work on your comments !
+- You can comment in french or in english, as you wish.
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create new Pull Request
