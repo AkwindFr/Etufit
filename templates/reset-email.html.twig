@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mot de passe oublié | Etufit{% endblock %}
+{% block stylesheets %}
+    <style>
+        #content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
+{# content reset-email #}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div id="content" class="col s12 l8 offset-l2 card z-depth-4">
+                <form id="formPasswordForget" action="{{ path('passwordMail') }}" method="POST">
+                    <div class="input-field">
+                        <input type="email" id="email" name="email">
+                        <label for="email">Veuillez saisir votre adresse email</label>
+                    </div>
+                    <div class="input-field right">
+                        <input type="submit" class="btn btn-large ub-orange btn-extend">
+                    </div>
+                </form>
+                <div id="view_forget"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/script-reset-Email.js') }}"></script>
+{% endblock %}

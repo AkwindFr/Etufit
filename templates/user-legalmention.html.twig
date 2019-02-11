@@ -1,0 +1,282 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mentions légales | Etufit{% endblock %}
+{% block stylesheets %}
+<style>
+    .link-color {
+        text-decoration: none;
+        color: #E35205;
+    }
+    .card {
+        padding : 15px;
+    }
+
+    .title-color {
+        text-align: center;
+        color: #E35205;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #E35205;
+    }
+
+    p {
+        padding-left: 5px;
+    }
+
+    #title {
+        padding-top: 10px;
+    }
+
+    .p-padding-end {
+        padding-bottom: 5px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<!-- container -->
+    <div class="container">
+        <main id="main">
+            <header>
+                <h1 class="title">Mentions légales Etufit</h1>
+            </header>
+
+            <p>
+                Le présent site est la propriété de l'Université de Bourgogne (uB). Le directeur de la publication du site Internet eest <span class="ub-text-orange">M.dupont</span>, Président de l'Université de
+                Bourgogne.
+            </p>
+
+            <div class="card z-depth-4">
+                <h5 id="title" class="title-color">Conception / contenus</h5>
+                <p>
+                    Conseil, élaboration, création graphique, référencement :<br>
+                    Pôle web - Service communication - Université de Bourgogne<br>
+                </p>
+
+                <p>
+                    Elaboration des contenus : Université de Bourgogne<br>
+                    Contact webmaster : webmaster@u-bourgogne.fr
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Hébergement</h5>
+                <p>Université de Bourgogne</p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Avertissement aux utilisateurs</h5>
+                <p>
+                    L'utilisateur déclare accepter les caractéristiques et les limites d'internet et, en
+                    particulier, reconnaître :
+                </p>
+
+                <p>
+                    avoir connaissance de la nature du réseau de l'internet et en particulier, de ses
+                    performances techniques et des temps de réponse, pour consulter, interroger ou transférer
+                    les données d'informations ,
+                </p>
+
+                <p>
+                    que les données circulant sur l'internet ne sont pas nécessairement protégées, notamment
+                    contre les détournements éventuels ,
+                </p>
+
+                <p>
+                    qu'il appartient à l'utilisateur de prendre toutes les mesures appropriées de façon à
+                    protéger ses propres données et/ou logiciels de la contamination par des éventuels virus
+                    sur le réseau de l'internet.
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Gestion des codes d'accès et mots de passe</h5>
+                <p>
+                    Certains services interactifs présents sur le site (Intranet) nécessitent un code d'accès
+                    et un mot de passe qui sont fournis par le gestionnaire de ces services.
+                </p>
+
+                <p>
+                    Les codes d'accès et les mots de passe sont confidentiels, personnels, incessibles et
+                    intransmissibles.
+                </p>
+
+                <p>
+                    L'utilisateur est responsable de la gestion et de la conservation de ses codes d'accès et
+                    mots de passe.
+                </p>
+
+                <p>
+                    En conséquence, il appartient à l'utilisateur de mettre en œuvre toutes mesures de
+                    précaution nécessaires à leurprotection et à leur conservation.
+                </p>
+
+                <p>
+                    L'utilisateur est responsable des conséquences de leur utilisation.
+                </p>
+
+                <p>
+                    Pour des raisons de sécurité, l'accès aux rubriques sécurisées sera automatiquement
+                    invalidé à l'issue de plusieurs tentatives d'accès erronées.
+                </p>
+
+                <p>
+                    L'uB se réserve le droit de suspendre l'accès au site en cas d'utilisation frauduleuse ou
+                    de tentative d'utilisation frauduleuse du mot de passe ou du code d'accès d'un utilisateur.
+                </p>
+
+                <p>
+                    En cas de suspension de l'accès, l'uB informera l'utilisateur.
+                </p>
+
+                <p>
+                    Le changement de mot de passe est conseillé au moment de la première connexion pour des
+                    raisons de confidentialité, et reste possible à tout moment par la suite.
+                </p>
+
+                <p>
+                    Il est conseillé par ailleurs aux
+                    utilisateurs de modifier ce mot de passe régulièrement.
+                </p>
+
+                <p>
+                    L'utilisateur est seul responsable du choix, de l'utilisation et de l'interprétation des
+                    données qu'il consulte, interroge et transfère sur l'internet et de l'usage des
+                    informations en ligne proposées par l'uB dont la responsabilité ne saurait être engagée à
+                    quelque titre que ce soit.
+                </p>
+
+                <p>
+                    L'Université de Bourgogne met tout en œuvre pour offrir aux utilisateurs des informations
+                    et/ou outils disponibles et vérifiés, mais ne saurait être tenue pour responsable des
+                    erreurs, d'une absence de disponibilité des informations et/ou de la présence de virus sur
+                    son site.
+                </p>
+
+                <p>
+                    L'utilisateur du site Internet reconnaît disposer de la compétence et des moyens
+                    nécessaires pour accéder et utiliser ce site.
+                </p>
+
+                <p>
+                    L'utilisateur reconnaît également avoir pris connaissance de la présente notice légale et
+                    s'engage à la respecter.
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Informatique, fichiers et libertés</h5>
+                <p>
+                    L'Université de Bourgogne respecte les dispositions protectrices des droits de l'Homme et
+                    des libertés fondamentales, la protection des données à caractère personnel et leur libre
+                    circulation ainsi que la Directive 95/46/CE du Parlement européen et du Conseil du 24
+                    octobre 1995 - Directive relative à la protection des personnes physiques à l'égard du
+                    traitement des données à caractère personnel et à la libre circulation de ces données ; et
+                    la loi n° 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés.
+                </p>
+
+                <p>
+                    L'Université de Bourgogne a effectué les procédures et obtenu les autorisations légales
+                    et
+                    administratives requises et notamment la déclaration relative à la mise en œuvre de
+                    traitement automatisé de données nominatives auprès de la Commission Nationale
+                    Informatique
+                    et Libertés (CNIL).
+                </p>
+
+                <p>
+                    L'utilisateur est notamment informé que, conformément aux termes de la loi n° 78-17 du
+                    6
+                    janvier 1978, relative à l'informatique, aux fichiers et aux libertés, il bénéficie
+                    d'un
+                    droit individuel d'accès, de rectification et de suppression des informations
+                    personnelles
+                    le concernant.
+                </p>
+
+                <p>
+                    Université de Bourgogne<br>
+                    Maison de l'Université,<br>
+                    Esplanade Erasme<br>
+                    BP 27877<br>
+                    21078 Dijon Cedex<br>
+                    ou par mail. : webmaster@u-bourgogne.fr
+                </p>
+
+                <p>Le présent site a fait l'objet d'une déclaration à la CNIL sous le numéro 1121776.</p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Propriété Intellectuelle</h5>
+                <p>
+                    La structure générale ainsi que les logiciels, textes, images, sons, graphismes ... et
+                    tout
+                    autre élément composant le site sont la propriété exclusive de l'Université de
+                    Bourgogne,
+                    ou bien sont régulièrement exploités sous licence.
+                </p>
+
+                <p>
+                    Toute reproduction ou représentation
+                    totale ou partielle de ce site par quelque procédé que ce soit, sans l'autorisation
+                    expresse de l'uB est interdite et constituerait une contrefaçon sanctionnée par les
+                    article L 335-2 et suivants du Code de la propriété intellectuelle.
+                </p>
+
+                <p>
+                    Il en est de même des bases de données figurant sur le site Internet qui sont protégées
+                    par les dispositions de la loi du 11 juillet 1998 portant transposition dans le Code de la
+                    propriété intellectuelle (CPI) de la directive européenne du 11 mars 1996 relative à la
+                    protection juridique des bases de données.
+                </p>
+
+                <p>
+                    L'ensemble des fonds documentaires, textes, ouvrages et illustrations mis en ligne est
+                    protégé par le droit d'auteur.
+                </p>
+
+                <p>
+                    Toute reproduction ou représentation totale ou partielle
+                    de ces images, toute modification, toute altération, de ces marques ou de ces logos...,
+                    effectuée à partir des éléments du site, n'est pas autorisée sans l'autorisation
+                    expresse de l'Université de Bourgogne, au sens de l'article L 713-2 du CPI.
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Liens hypertextes</h5>
+                <p>
+                    L'Université de Bourgogne décline toute responsabilité sur le contenu des sites dont il
+                    n'est pas l'éditeur et qui sont accessibles par l'intermédiaire de liens hypertextes.
+                </p>
+
+                <p>
+                    Nous remercions les utilisateurs du site de nous faire part d'éventuelles omissions,
+                    erreurs, corrections, en adressant un courriel à l'adresse suivante :
+                    webmaster@u-bourgogne.fr
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="title-color">Droits d'auteurs et copyright</h5>
+                <p>
+                    L'ensemble de ce site relève de la législation française et internationale sur le droit
+                    d'auteur et la propriété intellectuelle.
+                </p>
+
+                <p>
+                    Tous les droits de reproduction sont réservés,
+                    y compris pour les documents téléchargeables et les représentations iconographiques et
+                    photographiques.
+                </p>
+
+                <p class="p-padding-end">
+                    La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit
+                    est formellement interdite sauf autorisation expresse du directeur de la publication.
+                </p>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}

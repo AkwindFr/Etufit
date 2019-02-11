@@ -1,0 +1,35 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Erreur 403 | Etufit{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            background: url("{{ asset('images/fitness-1882721_1920.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color:#fff;
+        }
+
+        h1 {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            text-shadow: 0px 0px 7px #000000;
+        }
+
+        p {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-55%, -50%);
+            text-align: center;
+            text-shadow: 0px 0px 7px #000000;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>Erreur 403 !</h1>
+    <p>Vous n'avez pas accès à cette page</p>
+{% endblock %}

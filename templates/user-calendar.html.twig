@@ -1,0 +1,380 @@
+{% set account = app.session.get('account') %}
+
+{% extends 'base.html.twig' %}
+{% block title %}Calendrier | Etufit{% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href='{{ asset('css/fullcalendar.css') }}' />
+    <link rel='stylesheet' href='{{ asset('css/customFullcalendar.css') }}' />
+    <style>
+        .main {
+            background-color: white;
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        #calendar {
+            width:95%;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        .fc-past, .fc-nonbusiness, fc-bgevent {
+            background-color: #e0e0e0;
+        }
+
+        .fc-today{
+            background-color: #ffa726!important;
+        }
+
+        .fc-button:visited {
+            background-color: #E35205;
+        }
+        .fc-button:hover {
+            background-color: #E35205;
+        }
+        .fc-button:active {
+            background-color: #E35205;
+        }
+        .fc-button:focus {
+            background-color: #E35205;
+        }
+
+        #view_reserve {
+            color: red;
+        }
+
+        #view_success {
+            color: green;
+        }
+
+        .picker__frame {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .picker__calendar-container {
+            padding: 0;
+        }
+
+        .picker__holder {
+            height: 110%;
+        }
+
+        #formAddSlot {
+            margin-bottom: 30px;
+        }
+
+        #currentDate {
+            font-weight: bold;
+        }
+
+        .bold-size {
+            font-weight: 700;
+        }
+
+        .padding {
+            padding:.2rem .5rem;
+            border-radius: 5px;
+        }
+
+        #button_delete {
+            margin-top: 15px;
+        }
+
+        @media screen and (max-width: 600px)
+        {
+            /* Rédigez vos propriétés CSS ici */
+            .modal-content{
+                height: 100vh;
+                padding: 60px 0!important;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+            #reserve, #cancel {
+                margin-top: 10px!important;
+            }
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="container">
+<!-- Div to show calendar -->
+    <div id="calendar"></div>
+</div>
+
+{% if account.status > 2 %}
+<!-- Modale addSlot -->
+    <div id="addSlotModal" class="modal">
+        <div id="modal_close" class="modal-close">
+            <i class="material-icons small circle right" id="close_icon">close</i>
+        </div>
+        <div class="modal-content">
+            <h4>Nouveau créneau</h4>
+            <p>Créer un nouveau créneau</p>
+            <p id="view_add"></p>
+            <form id="formAddSlot" action="{{ path('addSlot') }}" method="POST">
+                <div class="input-field">
+                    <input type="text" name="referent" id="referent"  placeholder="Le nom du référent">
+                    <label for="referent">Nom du référent</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="places" id="places" placeholder="Places maximum">
+                    <label for="places">Places maximum</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="open" id="open" class="timepicker" placeholder="Ouverture">
+                    <label for="close">Horaires et date d'ouverture</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" name="close" id="close" class="timepicker" placeholder="Fermeture">
+                    <label for="open">Horaires et date de fermeture</label>
+                </div>
+                <button class="modal-action btn ub-orange right" type="submit">Créer</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+<!-- Modale showSlot -->
+    <div id="showSlotModal" class="modal" data-is-authenticated="{{ account.id }}">
+        <div id="modal_close" class="modal-close">
+            <i class="material-icons small circle right" id="close_icon">close</i>
+        </div>
+        <div class="modal-content">
+            <h3 id="currentDate" class="center"></h3>
+            <p class="bold-size center flow-text">Nombre de places restantes <br><span class="white-text green padding" id="empty_places"></span></p>
+            <p class="bold-size center flow-text">Horaires<br> <span class="ub-text-orange" id="start"></span>/<span class="ub-text-orange" id="end"></span></p>
+            <p class="bold-size center flow-text" id="referent">Référent <br> M. <span id="slot_referent"></span></p>
+            <p id="view_reserve"></p>
+            <ul id="view_user" class="center"></ul>
+            <div class="container center">
+                <div class="row">
+                    <p id="view_success" class="center"></p>
+                    <button class="white-text valid_green btn" id="reserve">Je réserve</button>
+                    <button class="waves-effect yellow accent-4 btn" id="cancel">J'annule</button>
+                    {% if account.status >= 3 %}
+                    <div class="row" id="button_delete">
+                        <button class="white-text invalid_red btn" id="delete">Supprimer</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<!-- Fullcalendar Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<!-- Language Script FullCalendar -->
+    <script src="{{ asset('js/locale-all.js') }}"></script>
+<!-- Calendar script -->
+    <script>
+    // Initialized datePicker
+        $(function(data){
+            $('.timepicker').pickatime({
+                default: 'now',
+                twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+                donetext: 'OK',
+                autoclose: false,
+                vibrate: true, // vibrate the device when dragging clock hand
+            });
+    // Initialized calendar
+            $('#calendar').fullCalendar({
+                locale: 'fr', // Language for calendar interface
+                height: 600,
+                header: {
+                    left: '',
+                    center: 'month, agendaWeek, agendaDay, prev, next today, title',
+                    right: ''
+                },
+                navLinks: true, // can click day/week names to navigate views
+                eventLimit: true, // Regroup events when more than 1 in a day
+                views: {
+                    agenda: {
+                        eventLimit: 2 // adjust the limit to 2 only for agendaWeek/agendaDay
+                    }
+                },
+                defaultDate: moment(),
+                defaultView: 'month',
+                hiddenDays: [0],
+                businessHours: [{
+                    dow: [1, 2, 3, 4, 5], // Monday - Friday
+                    start: '08:00',
+                    end: '12:00',
+                }, {
+                    dow: [1, 2, 3, 4, 5], // Monday - Friday (if adding lunch hours)
+                    start: '13:00',
+                    end: '17:00',
+                }],
+                eventLimitClick: "day", // Show day view when clicking on eventLimit button
+                timeFormat: 'H[h]mm', // Format of events in calendar
+                eventSources: [
+                {
+                    url: "{{ url('apiGetOpenings') }}", // Page where you call slots from your repository
+                    color: '#299b1f',// Options for rendering
+                    textColor: 'white'
+                }
+                ],
+            // When you click on day
+                dayClick: function(date){
+                    $('#addSlotModal').modal('open'); // Show modal to addSlot
+
+                // Clear error messages
+                    $('#error_referent').remove();
+                    $('#error_places').remove();
+                    $('#error_open').remove();
+                    $('#error_close').remove();
+                    $('#error_date').remove();
+
+                    $('#referent').removeClass('red_color');
+                    $('#places').removeClass('red_color');
+                    $('#open').removeClass('red_color');
+                    $('#close').removeClass('red_color');
+
+                    $('#open').attr('placeholder', "Entrer une date de début ") // Pre-load the dates of selected event into the modal fields
+                    $('#close').attr('placeholder', "Entrer une date de fin ")
+                    $('#open').val("") // Pre-load the dates of selected event into the modal fields
+                    $('#close').val("")
+                    window.slot = (date.format('YYYY-MM-DD') + 'T');
+                    window.timestamp = date.format('YYYY-MM-DD');
+                },
+            // When you click on event
+                eventClick: function(calEvent){ // When you click on event
+                    $('#view_user').text('')
+                    $('#people').remove();
+                // return the name of users who reserved this slot (for admin)
+                    $.post("{{ url('reservations') }}",{ id_opening : calEvent.id }, function(data){
+                        if(data.users){
+                            $('#view_user').before('<p id="people" class="flow-text center">Ils ont réservé ce créneau :</p>')
+                            $(data.users).each(function(){
+                                $('#view_user').append('<li class="ub-text-orange">' + this.name + '</li>')
+                            })
+                        }
+                    })
+                // return the total of users who reserved and if current user is part of it or not
+                    $.post("{{ url('total') }}",{ id_opening : calEvent.id }, function(data){
+                    // get the number of users who reserved the slot
+                        if(data.total){
+                            $('#empty_places').text(calEvent.places - data.total + ' /12')
+                        }
+                    // toggle buttons reserve/cancel
+                        if(data.users){
+                            var isAuthenticated = $('#showSlotModal').attr('data-is-authenticated');
+                            var toggle = 1;
+                            $(data.users).each(function(){
+                                if(this.id == isAuthenticated){
+                                    return toggle = 2;
+                                }
+                            })
+                            if(toggle == 1){
+                                $('#reserve').show()
+                                $('#cancel').hide()
+                            }
+                            if(toggle == 2) {
+                                $('#reserve').hide()
+                                $('#cancel').show()
+                            }
+                        }
+                        if(data.empty){
+                            $('#cancel').hide()
+                            $('#reserve').show()
+                        }
+                    })
+                // On click make all the fields empty
+                    $('#view_reserve').text('')
+                    $('#view_success').text('')
+                    $('#showSlotModal').modal('open'); // Show modal with information about slot
+                // Put all the informations about the slot clicked
+                    $('#currentDate').text(calEvent.start.format('DD-MM-YYYY'))
+                    $('#start').text(calEvent.start.format('HH:mm'))
+                    $('#end').text(calEvent.end.format('HH:mm'))
+                    $('#slot_referent').text(calEvent.referent)
+                // reserveSlot function on click
+                    $('#reserve').one('click', function(){
+                        $.post("{{ url('reserve') }}",{ id_opening : calEvent.id }, function(data){
+                            if(data.success){
+                                $('#view_success').text('Réservation effectuée avec succès')
+                                $('#reserve').hide()
+                                $('#cancel').show()
+                            } else {
+                                if(data.errors.id){
+                                    $('#view_reserve').text("Id invalide !")
+                                }
+                                if(data.errors.id_notfound){
+                                    $('#view_reserve').text("Aucun créneau ne correspond à la réservation demandée")
+                                }
+                                if(data.errors.user_notfound){
+                                    $('#view_reserve').text("Utilisateur inconnu")
+                                }
+                                if(data.errors.exist){
+                                    $('#view_reserve').text("Vous avez déjà reservé ce créneau !")
+                                }
+                                if(data.errors.dateOver){
+                                    $('#view_reserve').text('Vous ne pouvez pas agir sur un événement dépassé')
+                                }
+                            }
+                        })
+                    });
+                // cancelSlot function on click
+                    $('#cancel').one('click',function(){
+                        $.post("{{ url('cancel') }}",{ id_opening : calEvent.id }, function(data){
+                            if(data.success){
+                                $('#view_success').text('Réservation annulée avec succès')
+                                $('#cancel').hide()
+                                $('#reserve').show()
+                            } else {
+                                if(data.errors.id){
+                                    $('#view_reserve').text("Id invalide !")
+                                }
+                                if(data.errors.id_notfound){
+                                    $('#view_reserve').text("Aucun créneau ne correspond à la réservation demandée")
+                                }
+                                if(data.errors.user_notfound){
+                                    $('#view_reserve').text("Utilisateur inconnu")
+                                }
+                                if(data.errors.exist){
+                                    $('#view_reserve').text("Vous n'avez pas reservé ce créneau !")
+                                }
+                                if(data.errors.dateOver){
+                                    $('#view_reserve').text('Vous ne pouvez pas agir sur un événement dépassé')
+                                }
+                            }
+                        });
+                    });
+                // deleteSlot function on click
+                    $('#delete').one('click', function(){
+                        $.post("{{ url('deleteSlot') }}",{ id_opening : calEvent.id }, function(data){
+                            if(data.success){
+                                $('#view_success').text('Créneau supprimé')
+                                location.reload();
+                            } else {
+                                if(data.errors.id){
+                                    $('#view_reserve').text("Id invalide !")
+                                }
+                                if(data.errors.slot_undifinied){
+                                    $('#view_reserve').text('Aucun créneau trouvé sur les horaires proposées')
+                                }
+                            }
+                        })
+                    });
+                }
+            });
+
+        /* Modifications of fullcalendar elements */
+            $('.fc-center').addClass('row')
+            $('.fc-prev-button').addClass('col s6')
+            $('.fc-next-button').addClass('col s6')
+            $('.fc-today-button').addClass('col s12')
+            $('.fc-month-button').addClass('col s4')
+            $('.fc-agendaWeek-button').addClass('col s4')
+            $('.fc-agendaDay-button').addClass('col s4')
+            $('.fc-today-button').next().addClass('text_resize col s12')
+        });
+    </script>
+<!-- Script to addnewSlot -->
+    <script src="{{ asset('js/script-calendar-AddSlot.js') }}"></script>
+{% endblock %}

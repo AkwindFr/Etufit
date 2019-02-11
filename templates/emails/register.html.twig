@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block title %}Email de confirmation{% endblock %}
+{% block body %}
+<!-- création du lien pour confirmer l'inscription avec l'id et le token renvoi sur la page activation -->
+<p>Votre inscription a bien été prise en compte. Veuillez cliquer sur le lien suivant pour confirmer votre inscription. </p>
+<p><a href="{{ url('activation', {"token" : newUser.token, "id" : newUser.id}) }}">Confirmer l'inscription</a>
+
+{% endblock %}

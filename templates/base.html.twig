@@ -1,0 +1,238 @@
+<!-- Création de variable twig -->
+{% set route = app.request.get('_route') %}
+{% set account = app.session.get('account') %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+        <!-- Manifest pwa -->
+        <link rel="manifest" href="{{ asset('js/manifest.json') }}">
+        <!--Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- FontAwesome CDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <!--insertion du cdn materialize et css-->
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/main.css') }}" />
+        {% block stylesheets %}
+        {% endblock %}
+        <!--metadata-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div id="main_content">
+            <!-- Main container -->
+            <main class="main">
+                <!-- Mask shadow background -->
+                <div id="background">
+                    <!-- header content -->
+                    <header class="header back_dark">
+                        <!-- navbar -->
+                        <nav class="transparent">
+                            <div class="container">
+                                <div class="nav-wrapper ub-padding">
+                                    <a href="
+                                        {% if account is null %} {# Redirect to index if not loged #}
+                                            {{ path('index') }}
+                                        {% endif %}
+                                        {% if account is not null %} {# Redirect to dashboard if loged #}
+                                            {{ path('dashboard') }}
+                                        {% endif %}
+                                        " class="brand-logo orange-text" id="nav-logo">
+                                        <img src="{{ asset('images/LogoEtufit.png')}}" alt="logo d'étufit"
+                                            style="width:45px" class="circle z-depht-2 responsive-img activator">
+                                    </a>
+                                    <a href="#" data-activates="mobile-nav" class="button-collapse">
+                                        <i class="fa fa-bars"></i> Menu
+                                    </a>
+                                    <ul class="right hide-on-med-and-down">
+                                    <!-- If not registred -->
+                                        {% if account is null %}
+                                            <li>
+                                                <a href="{{path('index')}}" class="white-text {% if route == 'index' %} active-link{% endif %}">Accueil</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('register') }}" class="white-text {% if route == 'register' %} active-link{% endif %}">Inscription</a>
+                                            </li>
+                                            {% if route != 'logout' %}
+                                                <li>
+                                                    <a href="#login-modal" class="btn ub-orange modal-trigger">connexion</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endif %}
+                                <!-- If registred -->
+                                        {% if account is not null %}
+                                            <li>
+                                                <a href="{{ path('profil') }}" class="white-text {% if route == 'profil' %} active-link{% endif %}"><i class="fas fa-user-circle"></i> {{ account.name}} | Profil</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('dashboard') }}" class="white-text {% if route == 'dashboard' %} active-link{% endif %}">Tableau de bord</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('calendar') }}" class="white-text {% if route == 'calendar' %} active-link{% endif %}">Calendrier</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('logout') }}" class="white-text btn ub-orange">Déconnexion</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                <!-- Responsive/ wrapped menu content -->
+                                    <ul class="side-nav" id="mobile-nav">
+                                        <li>
+                                            <a href="
+                                                {% if account is null %} {# Redirect to index if not loged #}
+                                                    {{ path('index') }}
+                                                {% endif %}
+                                                {% if account is not null %} {# Redirect to dashboard if loged #}
+                                                    {{ path('dashboard') }}
+                                                {% endif %}
+                                                " class="center"><img src="{{ asset('images/LogoEtufit.png')}}" alt="logo d'étufit" style="width:60px" class="circle z-depht-2 responsive-img activator">
+                                            </a>
+                                        </li>
+                                        {% if account is null %}
+                                        <li>
+                                            <a class="active-link" href="{{path('index')}}"><i class="material-icons small text-darken-4">home</i>
+                                            Accueil</a>
+                                        </li>
+                                        {% if route != 'logout' %}
+                                            <li>
+                                                <a href="#login-modal" class="text-darken-4 modal-trigger"><i class="material-icons small text-darken-4">person</i>connexion</a>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{{ path('register')}}" class="text-darken-4"><i class="material-icons small text-darken-4">person_add</i>Inscription</a>
+                                        </li>
+                                        {% endif %}
+                                        {% if account is not null %}
+                                            <li>
+                                                <a href="{{ path('logout') }}" class="text-darken-4"><i class="material-icons small text-darken-4">person_outline</i>Déconnexion</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('profil') }}" class="text-darken-4 {% if route == 'profil' %} active-link{% endif %}"><i class="material-icons">person_pin</i> {{ account.name}} | Profil</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('myReservations') }}" class="text-darken-4 {% if route == 'myReservations' %} active-link{% endif %}"><i class="material-icons">chrome_reader_mode</i>Mes reservations</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('calendar') }}" class="text-darken-4 {% if route == 'calendar' %} active-link{% endif %}"><i class="material-icons">av_timer</i>Calendrier</a>
+                                            </li>
+                                            {% if account.status >= 3 %}
+                                                <li>
+                                                    <a href="{{ path('users') }}" class="text-darken-4 {% if route == 'users' %} active-link{% endif %}"><i class="material-icons small text-darken-4">person</i>Utilisateurs</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('historic') }}" class="text-darken-4 {% if route == 'historic' %} active-link{% endif %}"><i class="material-icons">date_range</i>Historique</a>
+                                                </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="{{ path('dashboard') }}" class="text-darken-4 {% if route == 'dashboard' %} active-link{% endif %}"><i class="material-icons">dashboard</i>Tableau de bord</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+                <!-- Content per pages -->
+                    {% block body %}{% endblock %}
+                    {% block secondaryContent %}{% endblock %}
+                </div>
+            </main>
+        <!-- Sticky footer -->
+            <footer class="page-footer sticky_footer ub-orange">
+                <div class="container">
+                    <div class="row">
+                        <div class="col m4 offset-m2 s6">
+                            <a href="{{ path('legalmention') }}" class="white-text footer_text">Mentions Légales</a>
+                        </div>
+                        <div class="col m4 offset-m1 s6">
+                            <a href="{{ path('whois') }}" class="white-text footer_text">Qui Sommes Nous ?</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- modal to Login -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal_close" class="modal-close">
+                    <i class="material-icons small circle right" id="close_icon">close</i>
+                </div>
+                <h4>Connexion</h4>
+                <p id="view_login"></p>
+                <div class="progress" id="progressBar">
+                    <div class="indeterminate"></div>
+                </div>
+                <form id="formLogin" action="{{ path('loginValidate') }}" method="POST">
+                    <div class="input-field">
+                        <input type="email" name="email" id="emailLogin" placeholder="Votre email">
+                        <label for="emailLogin">Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password" id="passwordLogin" placeholder="Mot de passe">
+                        <label for="passwordLogin">Mot de passe</label>
+                    </div>
+                    <a href="{{ path('passwordForget') }}">Mot de passe oublié ?</a>
+                    <button class="modal-action btn ub-orange right" type="submit" value="Connexion">Connexion</button>
+                </form>
+            </div>
+        </div>
+        <!-- preloader/overlay -->
+        <div id="loader" class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    <!-- JavaScript Scripts -->
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ asset('js/materialize.min.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/script-user-Login.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

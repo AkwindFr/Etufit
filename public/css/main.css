@@ -1,0 +1,287 @@
+/* General */
+html {
+  position: relative;
+  min-height: 100%;
+}
+/**/
+
+body {
+  font-family: "Verdana", sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+  min-height: 100vh;
+}
+
+.text_resize{
+  font-size: 1.8rem;
+}
+
+/* Colors */
+.back_dark {
+  background-color: rgba(0, 0, 0, .65);
+}
+
+.ub-orange {
+  background-color: #E35205;
+  background-image: -moz-linear-gradient(top, #E35205, rgb(230, 125, 69));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E35205), to(rgb(230, 125, 69)));
+  background-image: -webkit-linear-gradient(top, #E35205, rgb(230, 125, 69));
+  background-image: -o-linear-gradient(top #E35205, rgb(230, 125, 69));
+  background-image: linear-gradient(to bottom, #E35205, rgb(230, 125, 69));
+}
+
+.ub-text-orange {
+  color: #E35205;
+}
+
+.ub-grey {
+  background-color: #53565A;
+}
+
+.ub-text-grey {
+  color: #53565A;
+}
+
+.ub-text-shadow {
+  text-shadow: 3px 2px 5px #000000;
+}
+
+.valid_green {
+  color: green;
+  background-image: -moz-linear-gradient(top, green, rgb(80, 116, 80));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(green), to(rgb(80, 116, 80)));
+  background-image: -webkit-linear-gradient(top, green, rgb(80, 116, 80));
+  background-image: -o-linear-gradient(top green, rgb(80, 116, 80));
+  background-image: linear-gradient(to bottom, green, rgb(80, 116, 80));
+}
+
+.invalid_red {
+  color: red;
+  background-image: -moz-linear-gradient(top, #d50000,#ce7373);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d50000), to(#ce7373));
+  background-image: -webkit-linear-gradient(top, #d50000, #ce7373);
+  background-image: -o-linear-gradient(top #d50000, #ce7373);
+  background-image: linear-gradient(to bottom, #d50000, #ce7373);
+}
+
+.green_color {
+  color: green;
+}
+
+.red_color {
+  color: red;
+}
+/**/
+
+/* Background */
+.ub-back-opacity {
+  position: absolute;
+  background-color: rgba(0, 0, 0, .65);
+  width: 100%;
+  height: 100%;
+}
+/**/
+
+/* Footer */
+.sticky_footer {
+  position: absolute;
+  bottom: -60;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #E35205;
+}
+
+.page-footer {
+  padding: 0;
+}
+
+.footer_text {
+  font-size: 0.8rem;
+}
+/**/
+
+/*  nav */
+#nav-logo {
+  margin-top: 10px;
+}
+
+#loged {
+  margin-left: 70px;
+}
+
+#mobile-nav {
+  padding-top: 30px;
+  background-color: whitesmoke;
+}
+/**/
+
+
+/* index content */
+.showcase {
+  padding-top: 100px;
+}
+
+.active-link {
+  font-weight: bold;
+  border-bottom: 3px white solid;
+  background-color: rgba(255, 255, 255, 0.377);
+}
+/**/
+
+/* preloader */
+#loader {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+/**/
+
+/* change hover */
+.btn:hover {
+  background-color: grey;
+}
+/**/
+
+/* size modile modal */
+
+@media screen and (max-width: 600px)
+{
+    .modal {
+      margin: 0;
+      top: 0!important;
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh!important;
+    }
+}
+
+/* Icon close modal */
+#close_icon {
+  border: 2px solid black;
+  margin-top: 1%;
+  margin-right: 1%;
+}
+/**/
+
+.section,.row {
+  margin: 0;
+  padding: 0;
+}
+
+/* Change materialize default color */
+
+/* label focus color */
+.input-field input:focus + label {
+  color: #E35205 !important;
+}
+/* label underline focus color */
+.row .input-field input:focus {
+  border-bottom: 1px solid #E35205 !important;
+  box-shadow: 0 1px 0 0 #E35205 !important
+}
+
+/* Text inputs */
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default),
+textarea.materialize-textarea {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #53565A;
+  border-radius: 0;
+  outline: none;
+  height: 3rem;
+  width: 100%;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  padding: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  -webkit-transition: border .3s, -webkit-box-shadow .3s;
+  transition: border .3s, -webkit-box-shadow .3s;
+  transition: box-shadow .3s, border .3s;
+  transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #E35205;
+  -webkit-box-shadow: 0 1px 0 0 #E35205;
+          box-shadow: 0 1px 0 0 #E35205;
+}
+
+input:not([type]):focus:not([readonly]) + label,
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+input[type=password]:not(.browser-default):focus:not([readonly]) + label,
+input[type=email]:not(.browser-default):focus:not([readonly]) + label,
+input[type=url]:not(.browser-default):focus:not([readonly]) + label,
+input[type=time]:not(.browser-default):focus:not([readonly]) + label,
+input[type=date]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,
+input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
+input[type=number]:not(.browser-default):focus:not([readonly]) + label,
+input[type=search]:not(.browser-default):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: #E35205;
+}
+
+/* progress bar */
+
+.progress {
+  position: relative;
+  height: 4px;
+  display: block;
+  width: 100%;
+  background-color: rgb(168, 171, 173);
+  border-radius: 2px;
+  margin: 0.5rem 0 1rem 0;
+  overflow: hidden;
+}
+
+.progress .indeterminate {
+  background-color: #E35205;
+}
+
+/* Time picker */
+
+.picker__box{
+  height: 100%!important;
+}
+
+.picker__date-display { background-color: #E35205; }
+.picker__day.picker__day--today { color: red; }
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected { background-color: #E35205;}
+.picker__today { color: #E35205 !important;}
+.clockpicker-tick:hover { background: #E35205 !important; }
+.clockpicker-canvas line { stroke: #E35205 !important; }
+.clockpicker-canvas-bearing { fill: #E35205 !important; }
+.clockpicker-canvas-bg { fill: #E35205 !important; }

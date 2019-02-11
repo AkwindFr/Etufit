@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil | Etufit{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Special css for index */
+        .main {
+            background: url("{{ asset('images/header.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+    </style>
+{% endblock %}
+{# Content Index #}
+{% block body %}
+    <div class="showcase container">
+        <div class="row">
+            <div class="col s12 m10 offset-m1 center">
+                <h2 class="flow-text white-text ub-text-shadow">Bienvenue sur Étufit</h2>
+                <h2 class="flow-text white-text ub-text-shadow">Votre application de sport</h2>
+                <br>
+                <br>
+            <!-- Link to register -->
+                <a href="{{ path('register')}}" class="btn btn-large white black-text">inscription</a>
+            <!-- Link to modal login -->
+                <a href="#login-modal" class="btn btn-large ub-orange white-text modal-trigger">connexion</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function(){
+            $('.header').removeClass('back_dark')
+            $('#background').addClass('ub-back-opacity')
+        });
+    </script>
+{% endblock %}

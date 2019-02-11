@@ -1,0 +1,54 @@
+{% set account = app.session.get('account') %}
+{% extends 'base.html.twig' %}
+{% block title %}Tableau de bord | Etufit{% endblock %}
+{% block stylesheets %}
+<style>
+    #dashboard_content {
+        margin-top: 10px;
+    }
+
+    .dashboard_link {
+        margin: 10px;
+    }
+</style>
+{% endblock %}
+{# Content dashboard #}
+{% block body %}
+    <div class="container" id="dashboard_content">
+        <ul class="collection">
+            <li class="collection-item avatar">
+                <i class="material-icons circle">person_outline</i>
+                <a href="{{ path('logout') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2"> Déconnexion</a>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle">person_pin</i>
+                <a href="{{ path('profil') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2">Profil</a>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle">av_timer</i>
+                <a href="{{ path('calendar') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2">Calendrier</a>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle">chrome_reader_mode</i>
+                <a href="{{ path('myReservations') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2"> Réservations</a>
+            </li>
+        <!-- link to show if admin -->
+            {% if account.status >= 3 %}
+                <li class="collection-item avatar">
+                    <i class="material-icons circle">person</i>
+                    <a href="{{ path('users') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2">Gestion
+                    utilisateur</a>
+                </li>
+                <li class="collection-item avatar">
+                        <i class="material-icons circle">date_range</i>
+                    <a href="{{ path('historic') }}" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2">Historique</a>
+                </li>
+                <li class="collection-item avatar">
+                    <i class="material-icons circle">message</i>
+                    <a href="#" class="dashboard_link white-text btn ub-orange z-depth-3 col s5 l3 offset-l2">Messagerie</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}

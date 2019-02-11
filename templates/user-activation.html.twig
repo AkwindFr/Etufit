@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Validation | Etufit{% endblock %}
+{% block stylesheets %}
+    <style>
+        #content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<!-- Forumulaire activation -->
+    {% if success is defined %}
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col s12 l8 offset-l2 card z-depth-4">
+                    <p style="color: green">{{ user.name }}{{ success }}</p><a href="#login-modal" class="btn ub-orange modal-trigger right">Connexion</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}{% endblock %}

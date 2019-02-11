@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block title %}Qui sommes-nous | Etufit{% endblock %}
+
+{% block stylesheets %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<style>
+    .main_title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #E35205;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        color: #E35205;
+    }
+
+    .page-footer {
+        position: relative;
+    }
+
+    #block_links {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <header>
+        <h1 class="main_title">Qui sommes nous ? <span style="color: #53565A">| Etufit</span></h1>
+    </header>
+    <div class="container">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex explicabo ullam quod veritatis, laudantium dolor voluptate delectus quos, ducimus amet ab reiciendis, magnam corporis distinctio. A alias incidunt optio quae!Ut repellat, dolorum dolores officiis numquam molestiae minus aperiam repellendus eos ipsam atque veritatis quod. Molestiae temporibus magnam explicabo maxime molestias impedit exercitationem! Harum nulla cumque suscipit sequi eum! Autem.</p>
+        <div id="contact-page" class="card z-depth-4">
+            <div class="card-content">
+                <div class="col s12 m6 l6">
+                    <div id="view_contact"></div>
+                    <form id="contact-form" action="{{ path('contactUs') }}" method="POST">
+                        <h2 class="title">Contactez-nous</h2>
+                        <p>Vous avez une question? N'hésitez pas à nous envoyer un message. Notre équipe se fera un plaisir de vous aider.</p>
+                        <div class="input-field col s12">
+                            <input id="email" type="email" name="email">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <textarea id="message" class="materialize-textarea" name="message"></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <p id="recaptcha">{{ Recaptcha.displayRecaptcha()|raw }}</p>
+                        <div class="input-field col s12">
+                            <button class="btn ub-orange" type="submit" id="contact_submit">Envoyer</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card z-depth-1 col s12 m6 l6" id="block_links">
+                    <div class="card-content">
+                        <h3 class="title">liens utiles</h3>
+                        <ul>
+                            <li>
+                                <a href="#" class="link-color">FAQ</a>
+                            </li>
+                            <li>
+                                <a href="#" class="link-color">Université de Bourgogne</a>
+                            </li>
+                            <li>
+                                <a href="#" class="link-color">Site de STAPS de Bourguogne</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/script-user-Contact.js')}}"></script>
+{% endblock %}

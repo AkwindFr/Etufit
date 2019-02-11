@@ -1,0 +1,188 @@
+{% set account = app.session.get('account') %}
+
+{% extends 'base.html.twig' %}
+{% block title %}Utilisateurs | Etufit{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .status {
+            text-transform: lowercase;
+            font-size: 0.9rem;
+        }
+
+        .row {
+            margin-top : 10px;
+        }
+
+        /* Change some materialize property */
+        .switch label input[type=checkbox]:checked + .lever {
+            background-color : #E35205;
+        }
+
+        .switch label input[type=checkbox]:checked + .lever:after {
+            background-color: #ffffff;
+        }
+        /**/
+    </style>
+{% endblock %}
+
+{# Content Users #}
+{% block body %}
+    <div class="container" style="margin-top: 30px;">
+        <form>
+            <div class="input-field">
+                <input id="search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+            </div>
+        </form>
+        <ul class="collapsible">
+            {% for user in users %}
+                {% if user.status != 4 %} <!-- Don't show superadmin profil in the list -->
+                    <li id="li_{{ user.id }}">
+                        <div class="collapsible-header" id="{{ user.id }}" ="{{ user.status }}">
+                            <i class="material-icons">person_pin</i>{{ user.name }}
+                        </div>
+                        <div class="collapsible-body">
+                            <p> Status : <span class="ub-text-orange" id="status{{ user.id }}">
+                                        {% if user.status == 3 %}
+                                            Admin
+                                        {% elseif user.status == 2 %}
+                                            Référent
+                                        {% else %}
+                                            Utilisateur
+                                        {% endif %}</span></p>
+                            <p>Email : <span class="ub-text-orange">{{ user.email }}</span></p>
+                            <p>Numéro d'étudiant : <span class="ub-text-orange">{{ user.StudentId }}</span></p>
+                            <p id="view_message{{ user.id }}"></p>
+                            <p>
+                                <div class="switch">
+                                    <label class="switch_label">
+                                        Off
+                                        <input type="checkbox" id="checkReferent{{ user.id }}" {% if user.status == 2 %}checked{% endif %}>
+                                        <span class="lever"></span>
+                                        Référent
+                                    </label>
+                                </div>
+                                {% if account.status > 3 %}
+                                    <div class="switch">
+                                        <label class="switch_label">
+                                            Off
+                                            <input type="checkbox" id="checkAdmin{{ user.id }}" {% if user.status == 3 %}checked{% endif %}>
+                                            <span class="lever"></span>
+                                            Administrateur
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            </p>
+                            {% if account.status == 4 %}
+                                <button class="btn red accent-4" id="deleteUser{{ user.id }}">Supprimer</button><!-- Rajouter la modale de confirmation -->
+                            {% endif %}
+                            {% if account.status == 3 %}
+                                {% if user.status < 3 %}
+                                    <button class="btn red accent-4" id="deleteUser{{ user.id }}">Supprimer</button><!-- Rajouter la modale de confirmation -->
+                                {% endif %}
+                            {% endif %}
+                        <!-- progressBar -->
+                            <div class="progress progressBar" id="progressBar{{ user.id }}">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function(){
+            $('.progressBar').hide();
+        // Script to change status to user/referent/admin and delete user (admin)
+            $('.collapsible-header').on('click', function(){
+                var status = $('.collapsible-header').attr('status');
+                var id_user = $(this).attr('id');
+                var li = '#li_' + id_user;
+                var view_status = '#status' + id_user;
+                var input_referent = '#checkReferent' + id_user;
+                var input_admin = '#checkAdmin' + id_user;
+                var input_delete = '#deleteUser' + id_user;
+                var view = '#view_message' + id_user;
+                var progress_jquery = "#progressBar" + id_user;
+                var progress = "progressBar" + id_user;
+                $(view).text('')
+
+            // manage referent status
+                $(input_referent).on('click', function(){
+                    var condition_referent = $(input_referent).prop('checked');
+                    $.post("{{ url('statusReferent') }}",{ id_user : id_user, condition : condition_referent }, function(data){
+                        if(data.success_attribute_referent){
+                            $(view).text('Status referent attribué')
+                            $(view).addClass('green_color')
+                            $(view_status).text('Reférent')
+                        } else if (data.success_cancel_referent){
+                            $(view).text('Status referent retiré')
+                            $(view).addClass('green_color')
+                            $(view_status).text('Utilisateur')
+                        } else {
+                            if(data.errors.id){
+                                $(view).text("Id invalide")
+                            }
+                            if(data.errors.user_undefined){
+                                $(view).text('Aucun n\'utilisateur ne correspond à votre demande')
+                            }
+                        }
+                    })
+                })
+            // manage admin status
+                $(input_admin).on('click', function(){
+                    var condition_admin = $(input_admin).prop('checked');
+                    $.post("{{ url('statusAdmin') }}",{ id_user : id_user, condition : condition_admin }, function(data){
+                        if(data.success_attribute_admin){
+                            $(view).text('Status administrateur attribué')
+                            $(view).addClass('green_color')
+                            $(view_status).text('Admin')
+                        } else if (data.success_cancel_admin){
+                            $(view).text('Status administrateur retiré')
+                            $(view).addClass('green_color')
+                            $(view_status).text('Utilisateur')
+                        } else {
+                            if(data.errors.id){
+                                $(view).addClass('red_color')
+                                $(view).text("Id invalide")
+                            }
+                            if(data.errors.user_undefined){
+                                $(view).addClass('red_color')
+                                $(view).text('Aucun n\'utilisateur ne correspond à votre demande')
+                            }
+                        }
+                    })
+                })
+            // Delete user (admin)
+                $(input_delete).on('click', function(){
+                    $.post("{{ url('deleteUser') }}",{ id_user : id_user }, function(data){
+                        if(data.success_delete_user){
+                        // Progress bar
+                        $(view).text('Utilisateur supprimé')
+                        $(view).addClass('red_color')
+                        $(progress_jquery).show();
+                        setTimeout(function(){
+                            $(progress_jquery).remove();
+                            $(li).remove();
+                        }, 2000)
+                        } else {
+                            if(data.errors.id){
+                                $(view).addClass('red_color')
+                                $(view).text("Id invalide")
+                            }
+                            if(data.errors.user_undefined){
+                                $(view).addClass('red_color')
+                                $(view).text('Aucun n\'utilisateur ne correspond à votre demande')
+                            }
+                        }
+                    })
+                })
+            })
+        });
+    </script>
+{% endblock %}

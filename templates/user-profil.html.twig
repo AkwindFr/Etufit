@@ -1,0 +1,72 @@
+{% set account = app.session.get('account') %}
+{% extends 'base.html.twig' %}
+{% block title %}Profil | Etufit{% endblock %}
+{% block stylesheets %}
+<style>
+    .btn-delete {
+        font-size: 0.75rem;
+        margin-bottom: 0;
+    }
+    .ub-back-opacity {
+        background-color: white;
+    }
+    .card{
+        margin: 0 auto;
+        margin-top: 5vh;
+    }
+
+    .page-footer{
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    @media screen and (max-width: 600px)
+    {
+        .card .row{
+            display: flex;
+            flex-direction: column;
+        }
+        .btn {
+            margin: .3rem auto;
+        }
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <div class="container valign-wrapper">
+        <div class="card z-depth-4 ub-small-padding">
+            <button id="deleteAccount" class="btn-flat btn-delete red_color">Supprimer le compte</button>
+            <div id="deleteView"></div>
+            <div class="card-content">
+                <ul class="collection with-header">
+                    <li class="collection-header ub-text-orange">Mon profil</li>
+                    <li class="collection-item">Status :
+                        <span class="ub-text-orange">{% if account.status == 3 %}
+                            Administrateur
+                        {% elseif account.status == 2 %}
+                            Référent
+                        {% else %}
+                            Utilisateur
+                        {% endif %}</span>
+                    </li>
+                    <li class="collection-item">Nom : <span class="ub-text-orange">{{ account.name }}</span></li>
+                    <li class="collection-item">N° d'étudiant : <span class="ub-text-orange">{{ account.studentId }}</span></li>
+                    <li class="collection-item">Adresse email : <span class="ub-text-orange">{{ account.email }}</span></li>
+                    <li class="collection-item">
+                        <a href="{{ path('changePassword') }}" class="waves-effect waves-light ub-small-text">
+                                Changer de mot de passe</a>
+                    </li>
+                </ul>
+                <div class="row">
+                    <a href="{{ path('calendar') }}" class="waves-effect waves-light btn ub-orange ub-small-text flow-text "><i class="tiny material-icons "></i>calendrier</a>
+                    <a href="{{ path('myReservations') }}" class="waves-effect waves-light btn ub-orange ub-small-text flow-text"><i class="tiny material-icons "></i>réservation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/script-user-DeleteAccount.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Erreur 500 | Etufit{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            background: url("{{ asset('images/weights-1634747_1920.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        p {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-55%, -50%);
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>Erreur 500 !</h1>
+    <p>erreur interne au serveur</p>
+{% endblock %}

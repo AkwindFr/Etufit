@@ -1,0 +1,89 @@
+{% set account = app.session.get('account') %}
+
+{% extends 'base.html.twig' %}
+{% block title %}Mes réservations | Etufit{% endblock %}
+{% block stylesheets %}{% endblock %}
+{# Content Historic #}
+{% block body %}
+    <div class="container" style="margin-top: 30px;">
+        <form>
+            <div class="input-field">
+                <input id="search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+            </div>
+        </form>
+        <ul class="collapsible">
+            {% if openings is defined %}
+                {% for opening in openings %}
+                    <li id="li_{{ opening.id }}">
+                        <div class="collapsible-header" id="{{ opening.id }}">
+                            <i class="material-icons">date_range</i>Du : {{ opening.open|dateTimeFormatInteger }} <br> Au : {{ opening.close|dateTimeFormatInteger }}
+                        </div>
+                        <div class="collapsible-body">
+                            <p>Référent : {{ opening.referent }}, Places restantes : {{ opening.places }}</p>
+                            <p id="view_opening{{ opening.id }}" style="color: red"></p>
+                            <button class="waves-effect yellow accent-4 btn" id="cancelOpening{{ opening.id }}">J'annule</button>
+                        <!-- progressBar -->
+                            <div class="progress progressBar" id="progressBar{{ opening.id }}">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function(){
+            $('.progressBar').hide();
+
+            $('.collapsible-header').on('click', function(){
+                var id_opening = $(this).attr('id');
+                var input_cancel = '#cancelOpening' + id_opening;
+                var view = '#view_opening' + id_opening;
+                var li = '#li_' + id_opening;
+                var progress_jquery = "#progressBar" + id_opening;
+                var progress = "progressBar" + id_opening;
+
+            // cancelSlot function on click
+                $(input_cancel).one('click',function(){
+                $.post("{{ url('cancel') }}",{ id_opening : id_opening }, function(data){
+                        if(data.success){
+                            $('#view_success').text('Réservation annulée avec succès')
+                            $(progress_jquery).show();
+                            var timeleft = 1;
+                            // Countdown
+                            var connectTimer = setInterval(function(){
+                                document.getElementById(progress).value = 10 - --timeleft;
+                                if(timeleft <= 0)
+                                clearInterval(connectTimer);
+                            },1000);
+                            setTimeout(function(){
+                                $(li).remove();
+                            }, 3000)
+                        } else {
+                            if(data.errors.id){
+                                $(view).text("Id invalide !")
+                            }
+                            if(data.errors.id_notfound){
+                                $(view).text("Aucun créneau ne correspond à la réservation demandée")
+                            }
+                            if(data.errors.user_notfound){
+                                $(view).text("Utilisateur inconnu")
+                            }
+                            if(data.errors.exist){
+                                $(view).text("Vous n'avez pas reservé ce créneau !")
+                            }
+                            if(data.errors.dateOver){
+                                $(view).text("Vous ne pouvez pas agir sur un créneau dépassé")
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,64 @@
+/* Button background */
+.fc-state-default {
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #E35205, rgb(230, 125, 69));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E35205), to(rgb(230, 125, 69)));
+    background-image: -webkit-linear-gradient(top, #E35205, rgb(230, 125, 69));
+    background-image: -o-linear-gradient(top #E35205, rgb(230, 125, 69));
+    background-image: linear-gradient(to bottom, #E35205, rgb(230, 125, 69));
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color:#e6e6e6;
+    text-shadow: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); }
+
+/* Number (day) color */
+.fc-basic-view .fc-week-number,
+.fc-basic-view .fc-day-number {
+    padding: 2px;
+    color: #E35205;}
+
+
+.fc-unthemed th,
+.fc-unthemed td,
+.fc-unthemed thead,
+.fc-unthemed tbody,
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-row,
+.fc-unthemed .fc-content,
+.fc-unthemed .fc-popover,
+.fc-unthemed .fc-list-view,
+.fc-unthemed .fc-list-heading td {
+    border-color: rgb(112, 112, 112);}
+
+/* Background color of days (mon, tue, wen...) */
+.fc th {
+    text-align: center;
+    background-color: #E35205;
+    color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #E35205, rgb(230, 125, 69));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E35205), to(rgb(230, 125, 69)));
+    background-image: -webkit-linear-gradient(top, #E35205, rgb(230, 125, 69));
+    background-image: -o-linear-gradient(top #E35205, rgb(230, 125, 69));
+    background-image: linear-gradient(to bottom, #E35205, rgb(230, 125, 69));
+}
+
+/* desable over state (button) */
+.fc-state-hover,
+.fc-state-down,
+.fc-state-active,
+.fc-state-disabled {
+    color: white;
+    background-color: white; }
+
+.fc-state-hover {
+    color: none;
+    text-decoration: none;
+    background-position: 0px;
+    transition: none;
+}
+
+a[data-goto] {
+    color: white;
+}
+/**/

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}Déconnexion | Etufit{% endblock %}
+
+{# Content Logout #}
+{% block body %}
+    <div class="showcase container">
+        <div class="row">
+            <div class="center flow-text">
+                <p>Vous êtes déconnectés !</p>
+                <!-- <a href="#login-modal" class="btn ub-orange modal-trigger">Connexion</a> -->
+                <a href="{{ path('index') }}" id="link_back">Retour à l'accueil ?</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}

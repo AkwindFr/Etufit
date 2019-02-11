@@ -1,0 +1,6 @@
+Email de confirmation
+
+Votre inscription a bien été prise en compte. Veuillez cliquer sur le lien suivant pour confirmer votre inscription
+<!-- création du lien pour confirmer l'inscription avec l'id et le token renvoi sur la page activation -->
+<p>Confirmer l'inscription</p>
+{{ url('activation', {"token" : newUser.token, "id" : newUser.id}) }}
