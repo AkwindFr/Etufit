@@ -38,27 +38,27 @@ User system : sign up / sign in / sign out
 administrator system : superadmin / admin / referent / user
 
 superAdmin :
-    - Must be created by devs
-    - Cannot be suppressed
-    - has the right to manage admins.
-    - has all the admin rights (see admin)
+- Must be created by devs
+- Cannot be suppressed
+- has the right to manage admins.
+- has all the admin rights (see admin)
 
 admin :
-    - Named by Superadmin
-    - has the right to manage Referents and users.
-    - has the right to manage openings and assign referent
-    - Has all the referent and users rights
+- Named by Superadmin
+- has the right to manage Referents and users.
+- has the right to manage openings and assign referent
+- Has all the referent and users rights
 
 Referent :
-    - Named by admins
-    - Has the right to see wich user has reserved opening (list in opening modal)
-    - has all users rights
+- Named by admins
+- has the right to see wich user has reserved opening (list in opening modal)
+- has all users rights
 
 User :
-    - Default status after inscription
-    - has the right to make or cancel reservations
-    - has access to is own historic
-    - has access to his profil page
+- Default status after inscription
+- has the right to make or cancel reservations
+- has access to is own historic
+- has access to his profil page
 
 
 # How to use
