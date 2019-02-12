@@ -1,8 +1,8 @@
-# "How to use" is under descriptions see below.
+# "How to use" is under description => see below.
 
 # Etufit Project
 
-Hello and welcome to Etufit project.
+Hello and welcome to Etufit 0.1 project.
 
 This application is based on :
 - Symfony 4.x
@@ -23,13 +23,13 @@ This application is build to replace the actual reservation system of the new fi
 # Why we share this project ?
 
 Etufit has the possibility to be declined in different kind of way, actually we work on reservation and agenda system for fitness room. Feel free to developp another way to use it. Reservation of rooms, offices, materials etc...
-We have no obligation to keep private, it's an opportunitie for our team to share it with the whole world and find inspiration, advises, and maybe someone like you, who can help us to build a better, faster, stronger applications.
+We have no obligation to keep private, it's an opportunitie for our team to share it with the whole world and find inspiration, advises, and maybe someone like you, who can help us to build a better, faster, stronger application.
 
-Etufit is an occasion to learn and improve our skills by working on a real project.
+Etufit is an occasion to learn and improve our skills by working on a concret project.
 
 # Description
 
-Etufit is an application built with symfoni 4.x, materialize 1.x and full calendar 3.x.
+Etufit is an application built with symfony 4.x, materialize 1.x and full calendar 3.x.
 Please find in specfications the structure of etufit 0.1
 
 You can find :
@@ -67,8 +67,8 @@ Etufit is a symfony project.
 
 Make sure that composer is installed on your computer if you want to use Etufit.
 Link to composer : https://getcomposer.org/
+In some cases you can have missing php env var error when you try to use composer directly without restarting your computer.
 Restart your computer after installing.
-In some case you can have missing php env var error when you try to use composer directly without restarting your computer after installation.
 
 - Create folder on your computer.
 - Create git repository.
@@ -91,7 +91,7 @@ In some case you can have missing php env var error when you try to use composer
 You are now ready to use Etufit. See you soon !
 
 # Contributing
-- Don't forget to be clear with your commit, help us and yourself contribute and work on your comments !
+- Don't forget to be clear with your commit, help us and yourself !
 - You can comment in french or in english, as you wish.
 - Fork it
 - Create your feature branch (git checkout -b my-new-feature)
