@@ -963,9 +963,9 @@ class ApiController extends AbstractController
                     $errors['user_undifinied'] = true;
                 } else {
                 // Else delete user
-                    // $em = $this->getDoctrine()->getManager();
-                    // $em->remove($user);
-                    // $em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($user);
+                    $em->flush();
                     return $this->json(array( // return json array to show success message
                         "success_delete_user" => true
                     ));
