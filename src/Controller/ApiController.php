@@ -139,12 +139,17 @@ class ApiController extends AbstractController
                 $errors['undefined_account'] = true;
             } else {
                 if(password_verify($password, $userVerif->getPassword())){
-                // If mail and password match, log process
-                    $this->get('session')->set('account', $userVerif);
+                // Cannot access if account NOT activated
+                    if($userVerif->getActive() == 0){
+                        $errors['unactivated_account'] = true;
+                    } else {
+                    // If mail and password match, log process
+                        $this->get('session')->set('account', $userVerif);
 
-                    return $this->json(array( // return json array to show success message
-                        "success" => true
-                    ));
+                        return $this->json(array( // return json array to show success message
+                            "success" => true
+                        ));
+                    }
                 } else {
                     $errors['invalid_password'] = true;
                 }
@@ -290,16 +295,6 @@ class ApiController extends AbstractController
             ));
         }
     }
-
-    /**
-     *
-     *
-     *
-     * OLIVIER v
-     *
-     *
-     *
-     */
 
     /**
      * @Route ("/newPassword/", name="newPassword")
@@ -968,9 +963,9 @@ class ApiController extends AbstractController
                     $errors['user_undifinied'] = true;
                 } else {
                 // Else delete user
-                    $em = $this->getDoctrine()->getManager();
-                    $em->remove($user);
-                    $em->flush();
+                    // $em = $this->getDoctrine()->getManager();
+                    // $em->remove($user);
+                    // $em->flush();
                     return $this->json(array( // return json array to show success message
                         "success_delete_user" => true
                     ));
