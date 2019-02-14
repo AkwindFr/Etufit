@@ -83,37 +83,15 @@
                                     <button class="btn red accent-4" id="deleteUser{{ user.id }}">Supprimer</button><!-- Rajouter la modale de confirmation -->
                                 {% endif %}
                             {% endif %}
+                        <!-- progressBar -->
+                            <div class="progress progressBar" id="progressBar{{ user.id }}">
+                                <div class="indeterminate"></div>
+                            </div>
                         </div>
                     </li>
                 {% endif %}
             {% endfor %}
         </ul>
-
-        <!-- modal to confirm -->
-        <div id="delete-modal" class="modal">
-            <div class="modal-content">
-                <div id="modal_close" class="modal-close">
-                    <i class="material-icons small circle right" id="close_icon">close</i>
-                </div>
-                <h4>Attention</h4>
-                <p>Êtes-vous sur de vouloir attribuer le statut administrateur à cet utilisateur ?</p>
-                <button id="confirm_delete" class="btn valid_green">Oui</button>
-                <button id="cancel_delete" class="btn invalid_red">Non</button>
-            </div>
-        </div>
-
-        <!-- modal to switch -->
-        <div id="switch-modal" class="modal">
-            <div class="modal-content">
-                <div id="modal_close" class="modal-close">
-                    <i class="material-icons small circle right" id="close_icon">close</i>
-                </div>
-                <h4>Attention</h4>
-                <p>Êtes-vous sur de vouloir supprimer cet utilisateur ? Cette action est irréversible</p>
-                <button id="confirm_action" class="btn valid_green">Oui</button>
-                <button id="cancel_action" class="btn invalid_red">Non</button>
-            </div>
-        </div>
     </div>
 {% endblock %}
 {% block javascripts %}
@@ -134,33 +112,9 @@
                 var progress = "progressBar" + id_user;
                 $(view).text('')
 
-                $('.modal').modal({
-                    dismissible : false
-                });
-
-                function deleteUser(){
-                    $.post("{{ url('deleteUser') }}",{ id_user : id_user }, function(data){
-                        if(data.success_delete_user){
-                        // Progress bar
-                            $(view).text('Utilisateur supprimé')
-                            $(view).addClass('red_color')
-                            setTimeout(function(){
-                                $(li).fadeOut(2000);
-                            }, 2000)
-                            } else {
-                                if(data.errors.id){
-                                    $(view).addClass('red_color')
-                                    $(view).text("Id invalide")
-                                }
-                                if(data.errors.user_undefined){
-                                    $(view).addClass('red_color')
-                                    $(view).text('Aucun n\'utilisateur ne correspond à votre demande')
-                                }
-                            }
-                    })
-                }
-
-                function switchReferent(condition_referent){
+            // manage referent status
+                $(input_referent).on('click', function(){
+                    var condition_referent = $(input_referent).prop('checked');
                     $.post("{{ url('statusReferent') }}",{ id_user : id_user, condition : condition_referent }, function(data){
                         if(data.success_attribute_referent){
                             $(view).text('Status referent attribué')
@@ -179,9 +133,10 @@
                             }
                         }
                     })
-                }
-
-                function switchAdmin(condition_admin){
+                })
+            // manage admin status
+                $(input_admin).on('click', function(){
+                    var condition_admin = $(input_admin).prop('checked');
                     $.post("{{ url('statusAdmin') }}",{ id_user : id_user, condition : condition_admin }, function(data){
                         if(data.success_attribute_admin){
                             $(view).text('Status administrateur attribué')
@@ -202,39 +157,31 @@
                             }
                         }
                     })
-                }
-
-            // manage referent status
-                $(input_referent).on('click', function(){
-                    var condition_referent = $(input_referent).prop('checked');
-                    switchReferent(condition_referent);
                 })
-
-            // manage admin status
-                $(input_admin).on('click', function(e){
-                    var condition_admin = $(input_admin).prop('checked');
-                    switchAdmin(condition_admin);
-                })
-
             // Delete user (admin)
                 $(input_delete).on('click', function(){
-                    $('#delete-modal').modal('open');
-
-                    $('#confirm_delete').click(function(){
-                        $('#delete-modal').modal('close');
-                        deleteUser();
-                    })
-
-                    $('#cancel_delete').one('click', function(){
-                        $('#delete-modal').modal('close');
-                        $('#confirm_delete').off('click');
-                    })
-
-                    $('#modal_close').on('click', function(){
-                        $('#confirm_delete').off('click');
+                    $.post("{{ url('deleteUser') }}",{ id_user : id_user }, function(data){
+                        if(data.success_delete_user){
+                        // Progress bar
+                        $(view).text('Utilisateur supprimé')
+                        $(view).addClass('red_color')
+                        $(progress_jquery).show();
+                        setTimeout(function(){
+                            $(progress_jquery).remove();
+                            $(li).remove();
+                        }, 2000)
+                        } else {
+                            if(data.errors.id){
+                                $(view).addClass('red_color')
+                                $(view).text("Id invalide")
+                            }
+                            if(data.errors.user_undefined){
+                                $(view).addClass('red_color')
+                                $(view).text('Aucun n\'utilisateur ne correspond à votre demande')
+                            }
+                        }
                     })
                 })
-
             })
         });
     </script>

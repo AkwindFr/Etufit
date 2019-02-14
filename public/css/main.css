@@ -52,7 +52,7 @@ body {
 }
 
 .valid_green {
-  color: white;
+  color: green;
   background-image: -moz-linear-gradient(top, green, rgb(80, 116, 80));
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(green), to(rgb(80, 116, 80)));
   background-image: -webkit-linear-gradient(top, green, rgb(80, 116, 80));
@@ -61,7 +61,7 @@ body {
 }
 
 .invalid_red {
-  color: white;
+  color: red;
   background-image: -moz-linear-gradient(top, #d50000,#ce7373);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d50000), to(#ce7373));
   background-image: -webkit-linear-gradient(top, #d50000, #ce7373);

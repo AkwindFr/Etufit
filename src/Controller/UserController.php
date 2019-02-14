@@ -23,7 +23,7 @@ class UserController extends AbstractController
     public function activation($id, $token){ // Function to activate an account
     // Cannot access if account NOT activated
         if($this->get('session')->get('account') && $this->get('session')->get('account')->getActive() == 1){
-            throw new AccessDeniedHttpException('Votre compte est déjà actif');
+            throw new AccessDeniedHttpException('Votre compte est dékà actif');
         }
 
         $userRepo = $this->getDoctrine()->getRepository(User::class); // Get User repository
