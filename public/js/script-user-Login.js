@@ -60,6 +60,16 @@ $(function(){
                         $('#passwordLogin').removeClass('red-text')
                         $('#error_passwordLogin2').remove()
                     }
+
+                    if(data.errors.unactivated_account){
+                        $('#error_email').removeClass('red-text')
+                        $('#error_emailLogin2').remove()
+                        $('#emailLogin').before('<badge style="color:red;" id="error_emailLogin2">Votre compte n\'est pas activé, vérifier votre boîte mail !</badge>')
+                        $('#emailLogin').addClass('red-text')
+                    } else {
+                        $('#emailLogin').removeClass('red-text')
+                        $('#error_emailLogin2').remove()
+                    }
                 }
             },
             error: function(){
