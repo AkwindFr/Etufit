@@ -41,7 +41,15 @@
                 {% if user.status != 4 %} <!-- Don't show superadmin profil in the list -->
                     <li id="li_{{ user.id }}">
                         <div class="collapsible-header" id="{{ user.id }}" ="{{ user.status }}">
-                            <i class="material-icons">person_pin</i>{{ user.name }}
+                            <i class="material-icons">person_pin</i>
+                            <div>{{ user.name }} | {% if user.status == 3 %}
+                                                        <span class="sticker ub-orange">Admin</span>
+                                                    {% elseif user.status == 2 %}
+                                                        <span class="sticker valid_green">Référent</span>
+                                                    {% else %}
+                                                        <span class="sticker ub-blue">Utilisateur</span>
+                                                    {% endif %}</span>
+                            </div>
                         </div>
                         <div class="collapsible-body">
                             <p> Status : <span class="ub-text-orange" id="status{{ user.id }}">

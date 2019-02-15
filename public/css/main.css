@@ -27,12 +27,23 @@ body {
 }
 
 .ub-orange {
+  color: white;
   background-color: #E35205;
   background-image: -moz-linear-gradient(top, #E35205, rgb(230, 125, 69));
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E35205), to(rgb(230, 125, 69)));
   background-image: -webkit-linear-gradient(top, #E35205, rgb(230, 125, 69));
   background-image: -o-linear-gradient(top #E35205, rgb(230, 125, 69));
   background-image: linear-gradient(to bottom, #E35205, rgb(230, 125, 69));
+}
+
+.ub-blue {
+  color: white;
+  background-color: rgb(0, 204, 255);
+  background-image: -moz-linear-gradient(top, rgb(0, 204, 255), rgb(130, 230, 255));
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(0, 204, 255)), to(rgb(130, 230, 255)));
+  background-image: -webkit-linear-gradient(top, rgb(0, 204, 255), rgb(130, 230, 255));
+  background-image: -o-linear-gradient(top rgb(0, 204, 255), rgb(130, 230, 255));
+  background-image: linear-gradient(to bottom, rgb(0, 204, 255), rgb(130, 230, 255));
 }
 
 .ub-text-orange {
@@ -76,6 +87,21 @@ body {
 .red_color {
   color: red;
 }
+/**/
+
+/* Sticker */
+.sticker {
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 10px 10px;
+  padding: 0px 5px;
+  -webkit-border-radius: 10px 10px;
+  -moz-border-radius: 10px 10px;
+  -ms-border-radius: 10px 10px;
+  -o-border-radius: 10px 10px;
+}
+
+
 /**/
 
 /* Background */
