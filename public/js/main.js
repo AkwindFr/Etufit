@@ -7,6 +7,7 @@ $(function(){
     $('.modal').modal();
     // select register form
     $('select').material_select();
+    $('.button-collapse').sideNav();
 
 
     /* loader */
@@ -16,8 +17,6 @@ $(function(){
     //     // hide preloader
     //     $("#loader").fadeOut();
     //     $("#loader").hide();
-
-    //     $('.button-collapse').sideNav();
     // }, 400);
 });
 

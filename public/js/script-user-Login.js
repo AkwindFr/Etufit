@@ -32,7 +32,7 @@ $(function(){
                     }
 
                     if(data.errors.undefined_account){
-                        $('#error_email').removeClass('red-text')
+                        $('#emailLogin').removeClass('red-text')
                         $('#error_emailLogin2').remove()
                         $('#emailLogin').before('<badge style="color:red;" id="error_emailLogin2">Ce compte n\'existe pas !</badge>')
                         $('#emailLogin').addClass('red-text')
@@ -63,12 +63,12 @@ $(function(){
 
                     if(data.errors.unactivated_account){
                         $('#error_email').removeClass('red-text')
-                        $('#error_emailLogin2').remove()
-                        $('#emailLogin').before('<badge style="color:red;" id="error_emailLogin2">Votre compte n\'est pas activé, vérifier votre boîte mail !</badge>')
+                        $('#error_emailLogin3').remove()
+                        $('#emailLogin').before('<badge style="color:red;" id="error_emailLogin3">Votre compte n\'est pas activé, vérifier votre boîte mail !</badge>')
                         $('#emailLogin').addClass('red-text')
                     } else {
                         $('#emailLogin').removeClass('red-text')
-                        $('#error_emailLogin2').remove()
+                        $('#error_emailLogin3').remove()
                     }
                 }
             },

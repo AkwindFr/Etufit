@@ -164,9 +164,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route ("/deleteProfil/", name="deleteProfil", methods={"POST"})
+     * @Route ("/profilDeleteProfil/", name="profilDeleteProfil", methods={"POST"})
      */
-    public function profileDeleteUser(Request $request){ // Function to delete a User
+    public function profilDeleteUser(Request $request){ // Function to delete a User
     // Cannot access if you are not loged
         if(!$this->get('session')->has('account')){
                 throw new AccessDeniedHttpException();
@@ -473,11 +473,6 @@ class ApiController extends AbstractController
             throw new AccessDeniedHttpException();
         }
 
-    // Cannot access if account NOT activated
-        if($this->get('session')->get('account')->getActive() == 0){
-            throw new AccessDeniedHttpException();
-        }
-
         $id_user = $this->get('session')->get('account')->getId(); //Get the id of current user
         $id_opening = $request->request->get('id_opening'); // Get form field by get method
 
@@ -486,6 +481,12 @@ class ApiController extends AbstractController
 
         $userRepository = $this->getDoctrine()->getRepository(User::class); // Get User repository
         $user = $userRepository->findOneById($id_user); // Check if user is founded
+
+        foreach ($opening->getUser() as $user_total){
+            $users[] = array(
+                'user' => $user_total
+            );
+        }
 
     // Verifications
         if(!is_numeric($id_opening) || $id_opening < 0){
@@ -502,6 +503,12 @@ class ApiController extends AbstractController
 
         if($opening->getUser()->contains($user)){ // if a link between the opening and the user already exist
             $errors['exist'] = true;
+        }
+
+        if(isset($users)){
+            if(count($users) >= $opening->getPlaces()){
+                $errors['opening_full'] = true;
+            }
         }
 
         if(!isset($errors)){

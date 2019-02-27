@@ -66,7 +66,55 @@
             </div>
         </div>
     </div>
+
+    <!-- modal to confirm -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div id="modal_close" class="modal-close">
+                <i class="material-icons small circle right" id="close_icon">close</i>
+            </div>
+            <h4>Attention</h4>
+            <p>Êtes-vous sur de vouloir supprimer cet utilisateur ? Cette action est irréversible</p>
+            <button id="confirm_delete" class="btn valid_green">Oui</button>
+            <button id="cancel_delete" class="btn invalid_red">Non</button>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/script-user-DeleteAccount.js') }}"></script>
+    <script>
+        $(function () {
+            $('#deleteAccount').on('click', function () {
+                $('#delete-modal').modal('open');
+                    $('#confirm_delete').click(function(){
+
+                        $('#delete-modal').modal('close');
+                        $.post("{{ url('profilDeleteProfil') }}", function (data) {
+                            if (data.success_delete_user) {
+                                $('#deleteView').text('Compte supprimé')
+                            } else {
+                                if (data.errors.user_undefined) {
+                                    $('#deleteView').text('Utilisateur inconnu')
+                                }
+                            }
+                            if (data.success_delete_user) {
+                                setTimeout(function () {
+                                    if (data.redirect) {
+                                        window.location.replace(data.redirect);
+                                    }
+                                }, 1500)
+                            }
+                        })
+                    })
+
+                    $('#cancel_delete').one('click', function(){
+                        $('#delete-modal').modal('close');
+                        $('#confirm_delete').off('click');
+                    })
+
+                    $('#modal_close').on('click', function(){
+                        $('#confirm_delete').off('click');
+                    })
+            })
+        });
+    </script>
 {% endblock %}

@@ -49,6 +49,8 @@
             color: green;
         }
 
+        /* Début de la personnalisation du time picker */
+
         .picker__frame {
             width: 100%;
             max-width: 600px;
@@ -62,12 +64,18 @@
             height: 110%;
         }
 
+        /* */
+
         #formAddSlot {
             margin-bottom: 30px;
         }
 
         #currentDate {
+            font-size: 2rem;
             font-weight: bold;
+            border: 3px solid #E35205;
+            border-radius: 15px 15px;
+            padding: 0;
         }
 
         .bold-size {
@@ -83,21 +91,18 @@
             margin-top: 15px;
         }
 
-        @media screen and (max-width: 600px)
-        {
-            /* Rédigez vos propriétés CSS ici */
-            .modal-content{
-                height: 100vh;
-                padding: 60px 0!important;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-            }
-            #reserve, #cancel {
-                margin-top: 10px!important;
-            }
+        /* button showSloModal */
+        #reserve {
+            width: 100%;
+            height: 75px;
         }
+
+        #cancel {
+            width: 100%;
+            height: 75px;
+        }
+
+        /**/
     </style>
 {% endblock %}
 {% block body %}
@@ -144,8 +149,8 @@
             <i class="material-icons small circle right" id="close_icon">close</i>
         </div>
         <div class="modal-content">
-            <h3 id="currentDate" class="center"></h3>
-            <p class="bold-size center flow-text">Nombre de places restantes <br><span class="white-text green padding" id="empty_places"></span></p>
+            <p id="currentDate" class="center"></p>
+            <p class="bold-size center flow-text">Nombre de places restantes <br><span class="white-text padding" id="empty_places"></span></p>
             <p class="bold-size center flow-text">Horaires<br> <span class="ub-text-orange" id="start"></span>/<span class="ub-text-orange" id="end"></span></p>
             <p class="bold-size center flow-text" id="referent">Référent <br> M. <span id="slot_referent"></span></p>
             <p id="view_reserve"></p>
@@ -259,8 +264,27 @@
                     $.post("{{ url('total') }}",{ id_opening : calEvent.id }, function(data){
                     // get the number of users who reserved the slot
                         if(data.total){
-                            $('#empty_places').text(calEvent.places - data.total + ' /12')
-                        }
+                            var total = calEvent.places - data.total;
+                            $('#empty_places').text(total  + ' /12')
+
+                            // System to change color. Depend on number of reserver.
+                                if(total <= 12 && total > 9){
+                                    $('#empty_places').removeClass('yellow orange red black')
+                                    $('#empty_places').addClass('green')
+                                } else if (total < 10 && total > 6){
+                                    $('#empty_places').removeClass('green orange red black')
+                                    $('#empty_places').addClass('yellow')
+                                } else if (total < 7 && total > 4){
+                                    $('#empty_places').removeClass('green yellow red black')
+                                    $('#empty_places').addClass('orange')
+                                } else if (total < 4 && total > 0){
+                                    $('#empty_places').removeClass('green yellow orange black')
+                                    $('#empty_places').addClass('red')
+                                } else {
+                                    $('#empty_places').removeClass('green yellow orange red')
+                                    $('#empty_places').addClass('black')
+                                }
+                            }
                     // toggle buttons reserve/cancel
                         if(data.users){
                             var isAuthenticated = $('#showSlotModal').attr('data-is-authenticated');
@@ -279,9 +303,14 @@
                                 $('#cancel').show()
                             }
                         }
+
                         if(data.empty){
                             $('#cancel').hide()
                             $('#reserve').show()
+                        }
+
+                        if(total == 0){
+                            $('#reserve').hide()
                         }
                     })
                 // On click make all the fields empty
@@ -301,6 +330,9 @@
                                 $('#reserve').hide()
                                 $('#cancel').show()
                             } else {
+                                if(data.errors.opening_full){
+                                    $('#view_reserve').text("Ce créneau est déjà plein !")
+                                }
                                 if(data.errors.id){
                                     $('#view_reserve').text("Id invalide !")
                                 }
