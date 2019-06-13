@@ -9,6 +9,10 @@ $(function(){
     $('select').material_select();
     $('.button-collapse').sideNav();
 
+    $('.timepicker').on('mousedown',function(event){
+        event.preventDefault();
+    })
+
 
     /* loader */
     // setTimeout(function(){
